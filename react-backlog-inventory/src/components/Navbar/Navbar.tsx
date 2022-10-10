@@ -72,7 +72,7 @@ export const Navbar = () => {
   return (
     <div className={`${classes.row} ${classes.navbar} ${classes.width100} ${classes.alignCenter} ${classes.spaceBetween}`}>
         <div className={`${classes.navlogo}`} >
-            <Link to='/' className={`${classes.logo} ${classes.p5}`}><img className={classes.logo}src={Logo}></img></Link>
+            <Link to='/' className={`${classes.logo} ${classes.p5}`}></Link>
             <span className={classes.siteName}>Backlog Tracker</span>
 
         </div>
@@ -85,22 +85,22 @@ export const Navbar = () => {
                 </li>
                 <li>
                     <Button>
-                        <Link to='/' className={`${classes.navbarItem} ${classes.psides}`}>Backlog</Link>
+                        <Link to='/backlog' className={`${classes.navbarItem} ${classes.psides}`}>Backlog</Link>
+                    </Button>
+                </li>
+                {/* <li>
+                    <Button>
+                        <Link to='/logout' className={`${classes.navbarItem} ${classes.psides}`}>Logout</Link>
+                    </Button>
+                </li> */}
+                <li>
+                    <Button>
+                        <Link to='/signin' className={`${classes.navbarItem} ${classes.psides}`}>Sign In</Link>
                     </Button>
                 </li>
                 <li>
                     <Button>
-                        <Link to='/' className={`${classes.navbarItem} ${classes.psides}`}>Logout</Link>
-                    </Button>
-                </li>
-                <li>
-                    <Button>
-                        <Link to='/' className={`${classes.navbarItem} ${classes.psides}`}>Sign In</Link>
-                    </Button>
-                </li>
-                <li>
-                    <Button>
-                        <Link to='/' className={`${classes.navbarItem} ${classes.psides}`}>Sign Up</Link>
+                        <Link to='/signup' className={`${classes.navbarItem} ${classes.psides}`}>Sign Up</Link>
                     </Button>
                 </li>
             </ul>
