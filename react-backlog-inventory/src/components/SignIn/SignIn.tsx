@@ -55,11 +55,65 @@ interface SignInProps {
     match: RouteComponentProps["match"];
 }
 
-export const SignIn = () => {
+export const SignIn = withRouter((props:SignInProps) => {
+
+    const auth = useAuth();
+    const classes = useStyles();
+    const { history } = props;
+    const [ open, setOpen ] = useState(false);
+
+    const handleSnackOpen = () => {
+        setOpen(true)
+    };
+
+    const handleSnackClose = (event?: React.SyntheticEvent, reason?:string) => {
+        if(reason === 'clickaway') {
+            return;
+        }
+
+        setOpen(false);
+        history.push('/')
+    };
+
+    const signIn = async () => {
+        const response = await auth.signInWithPopup( new firebase.auth.GoogleAuthProvider());
+        if (response.user){
+            handleSnackOpen();
+        }
+    };
+
+    const signOut = async () => {
+        await auth.signOut();
+    }
+
   return (
     <div>
         <Navbar />
-        
+        <Container maxWidth='sm' className={classes.containerStyle}>
+            <Typography className={classes.typographyStyle}>Sign In Below</Typography>
+            <form>
+                <div>
+                    <label htmlFor="email">Email</label>
+                    <Input name="email" placeholder="Place Email Here"></Input>
+                </div>
+                <div>
+                    <label htmlFor="password">Password</label>
+                    <Input name="password" placeholder="Place Password Here"></Input>
+                </div>
+                <Button type="submit" variant="contained" color="primary">Submit</Button>
+            </form>
+
+            <AuthCheck fallback={
+                <Button className={classes.googleButton} onClick={signIn}>Sign In With Google</Button>
+            }>
+                <Button variant="contained" color="secondary" onClick={signOut}>Sign Out</Button>
+            </AuthCheck>
+            <Snackbar message={'Success'} open={open} autoHideDuration={6000} onClose={handleSnackClose}>
+                <Alert onClose={handleSnackClose} severity="success">
+                    Successful Sign In - Redirect in 6 seconds
+                </Alert>
+            </Snackbar>
+        </Container>
     </div>
   )
-}
+})

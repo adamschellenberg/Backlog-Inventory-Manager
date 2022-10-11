@@ -41,7 +41,9 @@ export const server_calls = {
                 'x-access-token': `Bearer ${token}`
             },
             body: JSON.stringify(data)
+            
         });
+        // console.log(response.json());
     },
 
     delete: async(id:string) => {

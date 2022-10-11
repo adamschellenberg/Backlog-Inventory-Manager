@@ -30,12 +30,16 @@ interface gridData {
 export const DataTable = () => {
 
     let { gameData, getData } = useGetData();
+    let [ open, setOpen ] = useState(false);
     let [ gridData, setData ] = useState<gridData>({data:{}});
     const [ selectionModel, setSelectionModel ] = useState<any>([]);
 
-    const [show, setShow] = useState(false);
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    let handleOpen = () => {
+        setOpen(true)
+    };
+    let handleClose = () => {
+        setOpen(false)
+    };
 
     let deleteData = () => {
         server_calls.delete(selectionModel);
@@ -43,8 +47,8 @@ export const DataTable = () => {
         setTimeout( () => {window.location.reload();}, 1000);
     };
 
-    console.log(gridData.data.id!);
-    console.log(`testing for data ${gameData}`);
+    // console.log(`GridData: ${gridData.data.id}`);
+    // console.log(`testing for data ${gameData}`);
 
   return (
     <div style={{ height: 400, width: '100%' }}>
@@ -53,28 +57,24 @@ export const DataTable = () => {
         <DataGrid rows={gameData} columns={ columns } pageSize={ 5 } checkboxSelection={true}
         onSelectionModelChange={ (item) => {
             setSelectionModel(item)
-        }} />
+            }}
+        />
 
-        <Button onClick={handleShow}>Update</Button>
+        <Button onClick={handleOpen}>Update</Button>
         <Button variant="contained" color="secondary" onClick={deleteData}>Delete</Button>
 
         {/* Dialog pop-up */}
-        <Modal show={show} onHide={handleClose}>
-            <Modal.Header closeButton>
-                <Modal.Title>Update Game</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-                <GameForm id={selectionModel!} />
-                </Modal.Body>
-            <Modal.Footer>
-                <Button variant="secondary" onClick={handleClose}>
-                    Close
-                </Button>
-                {/* <Button variant="primary" onClick={handleClose}>
-                    Update Game
-                </Button> */}
-            </Modal.Footer>
-        </Modal>
+        <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+            <DialogTitle id="form-dialog-title">Update Game {selectionModel}</DialogTitle>
+            <DialogContent>
+                <DialogContentText>Update Game</DialogContentText>
+                    <GameForm id={selectionModel!}/>
+            </DialogContent>
+            <DialogActions>
+                <Button onClick={handleClose} color="primary">Cancel</Button>
+                <Button onClick={handleClose} color="primary">Done</Button>
+            </DialogActions>
+        </Dialog>
         {/* End Dialog pop-up */}
     </div>
   )

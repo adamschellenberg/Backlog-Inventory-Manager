@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import { makeStyles } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
 import Logo from '../../assets/images/site-logo.png';
+import { AuthCheck } from 'reactfire';
 
 const useStyles = makeStyles({
     logo: {
@@ -83,26 +84,32 @@ export const Navbar = () => {
                         <Link to='/' className={`${classes.navbarItem} ${classes.psides}`}>Home</Link>
                     </Button>
                 </li>
+                <Suspense fallback={'loading...'}>
+                <AuthCheck fallback={
+                    <div><li>
+                        <Button>
+                            <Link to='/signin' className={`${classes.navbarItem} ${classes.psides}`}>Sign In</Link>
+                        </Button>
+                    </li>
+                    <li>
+                        <Button>
+                            <Link to='/signup' className={`${classes.navbarItem} ${classes.psides}`}>Sign Up</Link>
+                        </Button>
+                    </li>
+                    </div>
+                }>
                 <li>
                     <Button>
                         <Link to='/backlog' className={`${classes.navbarItem} ${classes.psides}`}>Backlog</Link>
                     </Button>
                 </li>
-                {/* <li>
+                <li>
                     <Button>
                         <Link to='/logout' className={`${classes.navbarItem} ${classes.psides}`}>Logout</Link>
                     </Button>
-                </li> */}
-                <li>
-                    <Button>
-                        <Link to='/signin' className={`${classes.navbarItem} ${classes.psides}`}>Sign In</Link>
-                    </Button>
                 </li>
-                <li>
-                    <Button>
-                        <Link to='/signup' className={`${classes.navbarItem} ${classes.psides}`}>Sign Up</Link>
-                    </Button>
-                </li>
+                </AuthCheck>
+                </Suspense>
             </ul>
         </div>
     </div>

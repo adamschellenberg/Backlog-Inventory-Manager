@@ -7,7 +7,7 @@ import Button from 'react-bootstrap/Button';
 import { server_calls } from '../../api';
 
 interface GameFormProps {
-    id?: string,
+    id?: string;
     data?: {}
 };
 
@@ -26,12 +26,12 @@ export const GameForm = (props:GameFormProps) => {
     const {register, handleSubmit} = useForm( {});
 
     const onSubmit = (data:any, event:any) => {
-        console.log(props.id)
+        // console.log(props.id)
         if(props.id!){
             server_calls.update(props.id!, data);
-            console.log(`Updated: ${data} ${props.id}`);
-            console.log(data);
-            setTimeout( () => {window.location.reload()}, 5000);
+            // console.log(`Updated: ${data} ${props.id}`);
+            // console.log(data);
+            setTimeout( () => {window.location.reload()}, 1000);
             event.target.reset();
         } else {
             dispatch(chooseTitle(data.title));
@@ -39,7 +39,7 @@ export const GameForm = (props:GameFormProps) => {
             dispatch(chooseGenre(data.genre));
             dispatch(chooseBeaten(data.beaten));
             server_calls.create(store.getState());
-            setTimeout( () => {window.location.reload()}, 5000)
+            setTimeout( () => {window.location.reload()}, 1000)
         }
     };
 
@@ -58,10 +58,10 @@ export const GameForm = (props:GameFormProps) => {
                 <label htmlFor="genre">Genre</label>
                 <Input {...register('genre')} name='genre' placeholder='genre' />
             </div>
-            {/* <div>
+            <div>
                 <label htmlFor="beaten">Beaten?</label>
-                <Input {...register('beaten')} name='beaten' placeholder='Beaten' />
-            </div> */}
+                <input {...register('beaten')} name='beaten' placeholder='Beaten' type="checkbox" />
+            </div>
             <Button type="submit">Submit</Button>
         </form>
     </div>
