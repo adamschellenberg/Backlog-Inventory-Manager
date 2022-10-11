@@ -103,11 +103,11 @@ export const Navbar = () => {
                         <Link to='/backlog' className={`${classes.navbarItem} ${classes.psides}`}>Backlog</Link>
                     </Button>
                 </li>
-                <li>
+                {/* <li>
                     <Button>
                         <Link to='/logout' className={`${classes.navbarItem} ${classes.psides}`}>Logout</Link>
                     </Button>
-                </li>
+                </li> */}
                 </AuthCheck>
                 </Suspense>
             </ul>
